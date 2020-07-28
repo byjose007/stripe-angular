@@ -58,8 +58,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.stripeTest = this.fb.group({
-      name: ['Angular v10', [Validators.required]],
-      amount: [1001, [Validators.required, Validators.pattern(/\d+/)]],
+      nombre: ['Angular', [Validators.required]],
+      telefono: [''],
+      direccion: [''],
+      pais: [''],
+      codigoPostal: [''],
+      email: ['', [Validators.required]],
+      // email: ['', [Validators.required]],
+      // amount: [1001, [Validators.required, Validators.pattern(/\d+/)]],
     });
   }
 
@@ -67,12 +73,13 @@ export class AppComponent implements OnInit {
     if (this.stripeTest.valid) {
       this.createPaymentIntent(this.stripeTest.value)
         .subscribe((result: any) => {
-          console.log(result.clientSecret, 'piiiiiiii');
+          console.log(result.clientSecret, 'clientSecret');
           this.stripeService.confirmCardPayment(result.clientSecret, {
             payment_method: {
               card: this.card.element,
               billing_details: {
-                name: this.stripeTest.get('name').value,
+                name: this.stripeTest.get('nombre').value,
+                email: this.stripeTest.get('email').value,
               },
             },
           }).subscribe(result => {
@@ -91,15 +98,18 @@ export class AppComponent implements OnInit {
           });
 
 
+        }, err => {
+          console.log( err , 'error');
+          
         });
     } else {
       console.log(this.stripeTest);
     }
   }
 
-  createPaymentIntent(amount: number): Observable<PaymentIntent> {
+  createPaymentIntent(userData: any): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(
-      `${this.apiUrl}/api/transaccion/intento-pago`, { amount }
+      `${this.apiUrl}/api/transaccion/intento-pago`, userData
     );
   }
 }
