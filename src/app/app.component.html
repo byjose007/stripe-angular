@@ -24,7 +24,7 @@
       </div> -->
 
 
-      <div [formGroup]="stripeTestForm">
+      <div [formGroup]="pagoForm">
         <div class="form-group">
           <label>Nombres</label>
           <input class="form-control" formControlName="nombre" />
@@ -51,9 +51,18 @@
           </ngx-stripe-card>
         </div>
 
-        <button  type="submit" (click)="pay()" class="btn btn-primary btn-lg btn-block">Pagar</button>
+        <button  type="submit" (click)="pagarStripe()" class="btn btn-primary btn-lg btn-block">Pagar</button>
 
       </div>
+
+
+
+      <!-- Paypay -->
+      <div>
+
+      <hr>
+      <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    </div>
     </div>
 
   </div>
