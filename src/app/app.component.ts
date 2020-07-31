@@ -140,40 +140,8 @@ export class AppComponent implements OnInit {
 
   private initConfigPaypal(): void {
     this.payPalConfig = {
-     
-
-      clientId:
-        "ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
-      // for creating orders (transactions) on server see
-      // https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
-
+      clientId:"ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
       currency: "USD",
-
-      // clientId: 'sb',
-      // createOrderOnClient: (data) => < ICreateOrderRequest > {
-      //     intent: 'CAPTURE',
-      //     purchase_units: [{
-      //         amount: {
-      //             currency_code: 'USD',
-      //             value: '18',
-      //             breakdown: {
-      //                 item_total: {
-      //                     currency_code: 'USD',
-      //                     value: '18'
-      //                 }
-      //             }
-      //         },
-      //         items: [{
-      //             name: 'Enterprise Subscription',
-      //             quantity: '1',
-      //             category: 'DIGITAL_GOODS',
-      //             unit_amount: {
-      //                 currency_code: 'USD',
-      //                 value: '18',
-      //             },
-      //         }]
-      //     }]
-      // },
       createOrderOnServer: (data) =>
         fetch(`${this.apiUrl}/api/transaccion/paypal-pago`, {
           method: "POST",
