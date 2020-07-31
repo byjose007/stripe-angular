@@ -194,7 +194,7 @@ export class AppComponent implements OnInit {
   // ---------- Servicios ------------
 
   crearPagoStripe(userData: any): Observable<PaymentIntent> {
-    return this.http.post<PaymentIntent>(`${this.apiUrl}/api/transaccion/tripe-pago`,userData);
+    return this.http.post<PaymentIntent>(`${this.apiUrl}/api/transaccion/stripe-pago`,userData);
   }
 
   crearCuenta(userData: any): Observable<any> {
