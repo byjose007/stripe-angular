@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.pagoForm = this.fb.group({
-      // pago
+      // datos de pago 
 
       nombre: ["Angular", [Validators.required]],
       telefono: ["656566534"],
@@ -103,11 +103,10 @@ export class AppComponent implements OnInit {
     };
 
     if (this.pagoForm.valid) {
-      this.crearPago(pagoStripe).subscribe(
+      this.crearPagoStripe(pagoStripe).subscribe(
         (result: any) => {
           console.log(result, "paymentintent and custumer");
-          this.stripeService
-            .confirmCardPayment(result.data.clientSecret, {
+          this.stripeService.confirmCardPayment(result.data.clientSecret, {
               payment_method: {
                 card: this.card.element,
                 billing_details: {
@@ -161,23 +160,18 @@ export class AppComponent implements OnInit {
 
       onApprove: (data, actions) => {
         console.log(
-          "onApprove - transaction was approved, but not authorized",
+          "onApprove - Transaccion ha sido aprovada, pero no autorizada",
           data,
           actions
         );
         actions.order.get().then((details) => {
-          console.log(
-            "onApprove - you can get full order details inside onApprove: ",
-            details
-          );
+          console.log("onApprove - you can get full order details inside onApprove: ",details);
         });
       },
       onClientAuthorization: (data) => {
-        console.log(
-          "onClientAuthorization - you should probably inform your server about completed transaction at this point",
-          data
+        console.log("onClientAuthorization - transacción autorizada",data
         );
-        this.showSuccess = true;
+        // this.showSuccess = true;
         this.crearCuenta(this.pagoForm.value).subscribe((cuenta) =>
           console.log(cuenta, "cuenta creada")
         );
@@ -199,31 +193,11 @@ export class AppComponent implements OnInit {
 
   // ---------- Servicios ------------
 
-  crearPago(userData: any): Observable<PaymentIntent> {
-    return this.http.post<PaymentIntent>(
-      `${this.apiUrl}/api/transaccion/crear-pago`,
-      userData
-    );
+  crearPagoStripe(userData: any): Observable<PaymentIntent> {
+    return this.http.post<PaymentIntent>(`${this.apiUrl}/api/transaccion/tripe-pago`,userData);
   }
 
-  crearCuenta(userData: any): Observable<PaymentIntent> {
-    return this.http.post<PaymentIntent>(
-      `${this.apiUrl}/api/crear-cuenta`,
-      userData
-    );
+  crearCuenta(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/api/crear-cuenta`,userData);
   }
-
-  // createPaymentIntent(userData: any): Observable<PaymentIntent> {
-  //   return this.http.post<PaymentIntent>(
-  //     `${this.apiUrl}/api/transaccion/stripe-pago`,
-  //     userData
-  //   );
-  // }
-
-  // guardarTransaccion(transaccion:any = {}): Observable<PaymentIntent> {
-  //   return this.http.post<PaymentIntent>(
-  //     `${this.apiUrl}/api/transaccion/guardar-transaccion`,
-  //     transaccion
-  //   );
-  // }
 }
