@@ -75,17 +75,19 @@ export class AppComponent implements OnInit {
 
       // Cuenta
       password: ["password", [Validators.required]],
-      fechaNacimiento: [""],
+      fechaNacimiento: ["29/03/2007"],
       aceptoTerminosCondiciones: [true, [Validators.required]],
       perfilGrupo: [false, [Validators.required]],
       emailVerificado: [false, [Validators.required]],
       menorEdad: [false, [Validators.required]],
-      emailResponsable: [""],
+      emailResponsable: ["responsable@gmail.com"],
       id_catalogoIdiomas: ["IDI_3", [Validators.required]],
       nombreContacto: ["Angular", [Validators.required]],
       listaTipoPerfiles: [[]],
       tipoAlbum: [[]],
       archivos: [[]],
+
+  
     });
 
     this.initConfigPaypal();
